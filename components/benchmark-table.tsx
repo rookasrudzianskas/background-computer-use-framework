@@ -1,28 +1,25 @@
-"use client";
-
-import { useMemo, useState } from "react";
-
 const agents = [
-  { model: "Claude Opus 4.6", score: 24, tasks: "6 / 25", company: "Anthropic" },
-  { model: "GPT-5.4", score: 20, tasks: "5 / 25", company: "OpenAI" },
-  { model: "Gemini 3.1 Pro", score: 16, tasks: "4 / 25", company: "Google" },
-  { model: "Claude Sonnet 4.5", score: 12, tasks: "3 / 25", company: "Anthropic" },
-  { model: "Qwen3-Coder", score: 8, tasks: "2 / 25", company: "Alibaba" },
+  ["Claude Fable 5", "Anthropic", "6 / 25"],
+  ["GPT-5.5", "OpenAI", "6 / 25"],
+  ["Gemini 3.5 Flash", "Google", "5 / 25"],
+  ["Claude Sonnet 4.5", "Anthropic", "5 / 25"],
+  ["Claude Haiku 4.5", "Anthropic", "5 / 25"],
+  ["Gemini 3.1 Pro", "Google", "5 / 25"],
+  ["GPT-5.6 Sol", "OpenAI", "5 / 25"],
+  ["Claude Opus 4.8", "Anthropic", "4 / 25"],
+  ["Muse Spark 1.1", "Meta", "4 / 25"],
+  ["Gemini 3 Flash", "Google", "1 / 25"],
 ];
 
-export function BenchmarkTable() {
-  const [filter, setFilter] = useState("All agents");
-  const rows = useMemo(() => filter === "All agents" ? agents : agents.filter(x => x.company === filter), [filter]);
+export function BenchmarkTable({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="benchmark-module">
-      <div className="benchmark-filters">
-        {["All agents", "Anthropic", "OpenAI", "Google"].map(item => <button className={filter === item ? "active" : ""} key={item} onClick={() => setFilter(item)}>{item}</button>)}
-      </div>
-      <div className="benchmark-table" role="table" aria-label="Cua-Bench leaderboard">
-        <div className="benchmark-row benchmark-head" role="row"><span>Rank</span><span>Agent</span><span>Tasks cleared</span><span>Score</span></div>
-        {rows.map((agent, index) => <div className="benchmark-row" role="row" key={agent.model}><span>0{index + 1}</span><span><strong>{agent.model}</strong><small>{agent.company}</small></span><span>{agent.tasks}</span><span>{agent.score}%</span></div>)}
+    <div className={`benchmark-module source-benchmark ${compact ? "compact" : ""}`}>
+      <div className="source-benchmark-top"><span>EDA · KICAD, V1</span><Link href="/cuabench/leaderboard">Full leaderboard ↗</Link></div>
+      <div className="source-benchmark-head"><span>Model</span><span>Full pass</span></div>
+      <div className="source-benchmark-rows" role="table" aria-label="Cua-Bench leaderboard">
+        {agents.map(agent => <div className="source-benchmark-row" role="row" key={agent[0]}><span><strong>{agent[0]}</strong> <small>{agent[1]}</small></span><code>{agent[2]}</code>{!compact && <i style={{"--score": `${Number.parseInt(agent[2]) / 6 * 100}%`} as React.CSSProperties} />}</div>)}
       </div>
     </div>
   );
 }
-
+import Link from "next/link";

@@ -5,6 +5,7 @@ import { BlogPage } from "@/components/blog-page";
 import { DocsPage } from "@/components/docs-page";
 import { DriverPage } from "@/components/driver-page";
 import { EditorialRoute, NotFoundRoute } from "@/components/editorial-route";
+import { DataCatalogPage, MacosPage } from "@/components/product-pages";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -24,6 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function DynamicRoute({ params }: Props) {
   const { slug } = await params;
   const root = slug[0];
+  if (root === "data") return <DataCatalogPage />;
+  if (root === "macos") return <MacosPage />;
   const page = editorialPages[root] ?? legalPages[root];
   if (page) return <EditorialRoute page={page} />;
   if (root === "cua-driver") return <DriverPage />;
@@ -33,4 +36,3 @@ export default async function DynamicRoute({ params }: Props) {
   if (root === "changelog") return <BlogPage changelog />;
   return <NotFoundRoute />;
 }
-
