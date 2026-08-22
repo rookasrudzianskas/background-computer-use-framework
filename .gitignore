@@ -7,3 +7,4 @@ work/
 outputs/
 .env*
 !.env.example
+.vercel
