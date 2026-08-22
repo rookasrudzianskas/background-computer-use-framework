@@ -9,7 +9,7 @@ function LinuxScene() {
       <div className="window linux-window">
         <aside><strong>Home</strong><span>Desktop</span><span>Documents</span><span>Downloads</span><span>Pictures</span></aside>
         <main>
-          <div className="window-title"><span>Home</span><small>12 items</small></div>
+          <div className="window-title"><span>Home</span><small><i className="surface-live-dot" /> 12 items</small></div>
           <div className="folder-grid">{files.map((name) => <span key={name}><Folder size={24} />{name}</span>)}</div>
           <div className="file-list"><span><File size={14} /> README.md <small>2 KB</small></span><span><Terminal size={14} /> run_eval.sh <small>4 KB</small></span><span><File size={14} /> episode-042.json <small>18 KB</small></span></div>
         </main>
@@ -25,7 +25,7 @@ function WindowsScene() {
       <div className="app-menubar"><span>KoalaCAD</span><span>File</span><span>Edit</span><span>View</span><span>Tools</span><span>Simulate</span></div>
       <div className="cad-layout">
         <aside><strong>LAYERS</strong>{["Base", "Walls", "Roof", "Trees", "Plumbing"].map(x => <span key={x}>▣ {x}</span>)}</aside>
-        <main className="cad-canvas"><div className="cad-grid" /><div className="koala-model"><i /><b /></div><span className="axis">Y<br />╲ Z<br />X</span></main>
+        <main className="cad-canvas"><div className="cad-grid" /><div className="koala-model"><i /><b /></div><div className="cad-console"><span>CONSOLE</span><b>Running stress simulation...</b><i /></div><span className="axis">Y<br />╲ Z<br />X</span></main>
         <aside><strong>PROPERTIES</strong><span>H: 0.8m</span><span>W: 0.6m</span><span>D: 0.4m</span><span>Material</span><button>Stress Test</button></aside>
       </div>
       <div className="win-taskbar"><Boxes /><Search size={14} /><Folder /><AppWindow /><Terminal /><span>11:28 AM</span></div>
@@ -39,7 +39,7 @@ function MacScene() {
       <div className="mac-menu"><strong>● Xcode</strong><span>File</span><span>Edit</span><span>View</span><span>Navigate</span><span>Editor</span><small>Tue Apr 1 9:41 AM</small></div>
       <div className="xcode-window">
         <aside><strong>KoalaSpots</strong><span>Views</span><span>Helpers</span><span>Regions</span><span>Spots</span></aside>
-        <main><div className="code-lines"><span>struct SpotMapView: View {'{'}</span><i>var body: some View {'{'}</i><span>Map(coordinateRegion: $region)</span><i>.mapStyle(.imagery)</i><span>.overlay(alignment: .bottom)</span><i>SpotDetailView(spot: spot)</i><span>{'}'}</span></div></main>
+        <main><div className="xcode-build"><i /><span>Building KoalaSpots…</span></div><div className="code-lines"><span>struct SpotMapView: View {'{'}</span><i>var body: some View {'{'}</i><span>Map(coordinateRegion: $region)</span><i>.mapStyle(.imagery)</i><span>.overlay(alignment: .bottom)</span><i>SpotDetailView(spot: spot)</i><span>{'}'}</span></div></main>
         <div className="iphone-preview"><div className="island" /><strong>Uluru</strong><small>Northern Territory</small><div className="map-surface"><Map size={25} /></div></div>
       </div>
       <div className="mac-dock"><Search /><MessageSquare /><Mail /><Music /><ImageIcon /><Settings /></div>
@@ -53,7 +53,7 @@ function AndroidScene() {
     <div className="phone-scene">
       <div className="phone-camera" />
       <div className="phone-time">12:26<small>Tue, Mar 12</small></div>
-      <div className="phone-apps">{apps.map((Icon, index) => <span key={index}><Icon size={16} /></span>)}</div>
+      <div className="phone-apps">{apps.map((Icon, index) => <span key={index}><Icon size={16} />{index === 2 && <i />}</span>)}</div>
       <div className="phone-home" />
     </div>
   );

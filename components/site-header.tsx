@@ -1,19 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Menu, MessageCircle, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { Apple, Boxes, ChartNoAxesCombined, ChevronDown, Cloud, Fingerprint, Menu, MonitorCog, TerminalSquare, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "./logo";
 import { navGroups } from "@/lib/site-data";
 
 export function SiteHeader({ showBanner = true }: { showBanner?: boolean }) {
   const [open, setOpen] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  const productIcons = [TerminalSquare, Boxes, Cloud, ChartNoAxesCombined, Fingerprint, Apple];
 
   useEffect(() => {
     const close = () => setOpen(null);
+    const clickAway = (event: MouseEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) close();
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        close();
+        setMobile(false);
+      }
+    };
     window.addEventListener("scroll", close, { passive: true });
-    return () => window.removeEventListener("scroll", close);
+    window.addEventListener("pointerdown", clickAway);
+    window.addEventListener("keydown", escape);
+    return () => {
+      window.removeEventListener("scroll", close);
+      window.removeEventListener("pointerdown", clickAway);
+      window.removeEventListener("keydown", escape);
+    };
   }, []);
 
   return (
@@ -28,7 +47,7 @@ export function SiteHeader({ showBanner = true }: { showBanner?: boolean }) {
       <header className="site-header">
         <div className="shell header-inner">
           <Logo />
-          <nav className="desktop-nav" aria-label="Primary navigation">
+          <nav ref={navRef} className="desktop-nav" aria-label="Primary navigation">
             <Link href="/#product">Why Cua</Link>
             <Link href="/#fleet">Fleet</Link>
             {navGroups.map((group) => (
@@ -41,17 +60,20 @@ export function SiteHeader({ showBanner = true }: { showBanner?: boolean }) {
                   {group.label} <ChevronDown size={13} />
                 </button>
                 <div className={`nav-popover ${open === group.label ? "is-open" : ""}`}>
-                  {group.links.map(([label, href, description]) => (
+                  {group.links.map(([label, href], index) => {
+                    const Icon = group.label === "Products" ? productIcons[index] : MonitorCog;
+                    return (
                     <Link href={href} key={label} onClick={() => setOpen(null)}>
+                      <Icon aria-hidden="true" />
                       <strong>{label}</strong>
-                      <span>{description}</span>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}
             <a className="discord-icon" href="https://discord.gg/mVnXXpdE85" aria-label="Join our Discord">
-              <MessageCircle size={15} />
+              <Image src="/assets/cua/discord-white.svg" alt="" width={17} height={17} />
             </a>
             <a className="button button-primary button-compact" href="https://run.cua.ai/">Open Run</a>
           </nav>
@@ -78,4 +100,3 @@ export function SiteHeader({ showBanner = true }: { showBanner?: boolean }) {
     </>
   );
 }
-

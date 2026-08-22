@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Box, ChartNoAxesCombined, CheckCircle2, Code2, Database, Gauge, GitFork, Layers3, Monitor, MousePointer2, ShieldCheck, Sparkles } from "lucide-react";
-import { AskConsole, RotatingWord } from "@/components/ask-console";
+import { HeroExperience, MeshCanvas, RotatingWord } from "@/components/ask-console";
 import { OsScene } from "@/components/os-scene";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
@@ -24,18 +25,27 @@ export default function Home() {
     <>
       <SiteHeader />
       <main>
-        <section className="hero">
-          <div className="hero-aura" />
-          <div className="shell hero-grid">
+        <section className="hero hero-wrapper">
+          <MeshCanvas />
+          <div className="hero-top-fade" />
+          <div className="hero-bottom-fade" />
+          <div className="hero-content">
             <div className="hero-copy">
-              <h1>Scale computer fleets<br />for every <RotatingWord /></h1>
+              <h1><span>Scale computer fleets</span><br />for every <RotatingWord /></h1>
               <p>Run computer-use agent training, eval, and data-generation workloads in parallel on Linux, Windows, macOS, and Android machines. Fork from snapshots, reproduce failures, and turn agent activity into training data.</p>
-              <div className="integration-proof">
-                <span>Cua Driver integrations</span>
-                <div><b>◉ Factory Droid</b><b>◒ Nous Research</b><b>▶ Clicky</b><b>♧ 21.8K humans</b></div>
+            </div>
+          </div>
+          <div className="hero-screen-wrap"><HeroExperience /></div>
+          <div className="hero-bottom">
+            <div className="integration-proof">
+              <span>Cua Driver integrations</span>
+              <div role="list" aria-label="Cua ecosystem proof logos">
+                <a role="listitem" href="https://qwenlm.github.io/qwen-code-docs/en/users/configuration/settings/"><Image src="/assets/cua/qwen-code.svg" alt="" width={14} height={14} />Qwen Code</a>
+                <a role="listitem" href="https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/apple/apple-macos-computer-use"><span>♙</span>Nous Research</a>
+                <a role="listitem" href="https://x.com/FarzaTV/status/2051454940326097220"><Image src="/assets/cua/clicky.png" alt="" width={14} height={14} />Clicky</a>
+                <a role="listitem" href="https://github.com/trycua/cua"><span>♞</span>21.8K Humans</a>
               </div>
             </div>
-            <AskConsole />
           </div>
         </section>
 
@@ -53,12 +63,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="fleet-section" id="fleet">
-          <div className="shell">
+        <section className="fleet-section homepage-fleet" id="fleet">
+          <div>
             <Reveal className="fleet-intro"><span className="eyebrow">Fleet coverage</span><h2>Run one rollout layer <span>across four OS families.</span></h2></Reveal>
             <div className="fleet-list">
               {fleet.map((item) => (
-                <Reveal className="fleet-row" key={item.type}>
+                <Reveal className="fleet-row homepage-fleet-card" key={item.type}>
                   <div className="fleet-copy"><span className="eyebrow">{item.label}</span><h3>{item.title}</h3>{item.type === "macos" && <Link href="/macos" className="text-link">Explore Cloud macOS</Link>}<p>{item.body}</p></div>
                   <div className={`scene-wrap scene-wrap-${item.type}`}><OsScene type={item.type} /></div>
                 </Reveal>
@@ -82,7 +92,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section open-core-section">
+        <section className="section open-core-section" id="open-source">
           <div className="shell">
             <Reveal>
               <span className="eyebrow">Open core</span>
@@ -96,7 +106,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section data-section">
+        <section className="section data-section" id="verified-data">
           <div className="shell">
             <Reveal>
               <span className="eyebrow">Verified data</span>
