@@ -1,6 +1,6 @@
-# Cua.ai Next.js 16 clone
+# L.I.S.A. — Locomotive interactive experience
 
-A faithful, responsive recreation of [cua.ai](https://cua.ai/) built with Next.js 16, React 19, TypeScript, and carefully authored CSS.
+A production-ready Next.js 16 reconstruction of Locomotive's immersive L.I.S.A. experience, including its animated introduction, conversational branches, form flow, sound controls, and responsive scene composition.
 
 ## Run locally
 
@@ -11,10 +11,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Included
+## Quality checks
 
-- Long-form homepage with animated hero, ask console, product cards, fleet scenes, verified data, pricing CTA, and footer
-- Product, benchmark, environments, macOS, docs, blog, changelog, company, and legal routes
-- Functional navigation dropdowns, mobile menu, FAQ accordions, prompt suggestions, and responsive layouts
-- Reduced-motion support, keyboard focus states, and semantic markup
-
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
